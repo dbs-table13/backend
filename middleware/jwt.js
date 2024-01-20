@@ -1,13 +1,12 @@
-const {sign, verify} = require("jsonwebtoken");
+const { sign, verify } = require("jsonwebtoken");
 require('dotenv').config();
-
 
 const createToken = (user) => {
     const accessToken = sign(
-        {employee_id: user.employee_id, user_type: user.user_type}, 
+        { id: user.id, username: user.username }, // Use 'id' from the database as 'employee_id'
         process.env.ACCESS_TOKEN_SECRET
-        );
-        return accessToken;
+    );
+    return accessToken;
 };
 
 const validateToken = (req, res, next) => {
@@ -22,8 +21,8 @@ const validateToken = (req, res, next) => {
         if (validToken) {
             // Extract user information from the token payload
             req.user = {
-                employee_id: validToken.employee_id,
-                user_type: validToken.user_type
+                employee_id: validToken.id, // Map 'id' from the token payload to 'employee_id'
+                user_type: validToken.user_type // Assuming 'user_type' is not used, or you can map it accordingly
             };
             return next();
         }
@@ -32,4 +31,4 @@ const validateToken = (req, res, next) => {
     }
 };
 
- module.exports = {createToken, validateToken}
+module.exports = { createToken, validateToken };
