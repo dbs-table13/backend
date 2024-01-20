@@ -3,7 +3,7 @@ const router = express.Router();
 const { validateToken } = require('../middleware/JWT');
 const {
     deleteItinerary
-} = require('../controller/itineraryController3.js');
+} = require('../controller/itineraryController.js');
 
 router.delete("/deleteItinerary/:id", validateToken, deleteItinerary);
 
