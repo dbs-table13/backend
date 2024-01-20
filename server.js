@@ -2,7 +2,7 @@ const dotenv = require('dotenv');
 const result = dotenv.config();
 
 const express = require('express');
-const claimRoutes = require('./claimsRouter.js');
+const claimRoutes = require('./routes/claimsRouter.js');
 
 const app = express();
 const port = 3001;
