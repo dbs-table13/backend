@@ -2,11 +2,10 @@ const dotenv = require('dotenv');
 const result = dotenv.config();
 
 const express = require('express');
-const claimRoutes = require('./routes/claimsRouter.js');
+
 const userRoutes = require('./routes/userRouter.js');
-const itineraryRoutes = require('./routes/itineraryRouter3.js');
 const itineraryRoutes1 = require('./routes/itineraryRouter1.js');
-const userRoutes = require('./routes/userRoutes.js');
+const itineraryRoute2 = require('./routes/itineraryRouter2.js');
 
 const app = express();
 const port = 3001;
@@ -33,11 +32,10 @@ connection.connect(error => {
   });
 
 // Claims Routes
-app.use('/claims', claimRoutes);
-app.use('/users', userRoutes);
-app.use('/itinerary', itineraryRoutes)
+app.use('/itinerary', itineraryRoute2);
 app.use('/users', userRoutes);
 app.use('/itinerary', itineraryRoutes1);
+
 
 // Start the server
 app.listen(port, () => {

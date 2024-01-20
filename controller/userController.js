@@ -1,9 +1,11 @@
+
+const { connectToDatabase } = require('../database.js');
+
 /**
  * Author: Deeksha Sridhar
  * Last Modified: 20th Jan 2024
  */
 
-const connectToDatabase = require('../database.js');
 const { createToken } = require('../middleware/JWT');
 
 const connection = connectToDatabase();
