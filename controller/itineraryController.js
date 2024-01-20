@@ -1,4 +1,4 @@
-const connectToDatabase = require('../database.js');
+const { connectToDatabase } = require('../database.js');
 const connection = connectToDatabase().promise(); // Use .promise() to enable the promise wrapper
 
 // getItineraries endpoint
@@ -17,12 +17,13 @@ const getItineraries = (req, res) => {
     FROM 
         itinerary it
     JOIN 
-        itinerary_destination it_dest ON it.id = it_dest.itinerary_id
+        itinerary_destination it_dest ON it.id = it_dest.itineray_id
     JOIN 
         destination dest ON it_dest.destination_id = dest.id
     WHERE 
         it.user_id = ?
   `;
+  const connection = connectToDatabase();
 
   connection.query(query, [user_id], (error, results) => {
       if (error) {
@@ -49,7 +50,7 @@ const getItineraries = (req, res) => {
         });
       });
   
-      res.json(Object.values(itineraries));
+      res.status(201).json({message: 'Itineraries retrieved successfully', itineraries: Object.values(itineraries)});
     });
   };
 
