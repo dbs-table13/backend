@@ -4,8 +4,8 @@ const result = dotenv.config();
 const express = require('express');
 
 const userRoutes = require('./routes/userRouter.js');
+const itineraryRoutes1 = require('./routes/itineraryRouter1.js');
 const itineraryRoute2 = require('./routes/itineraryRouter2.js');
-const itineraryRoute3 = require('./routes/itineraryRouter3.js');
 
 const app = express();
 const port = 3001;
@@ -34,7 +34,8 @@ connection.connect(error => {
 // Claims Routes
 app.use('/itinerary', itineraryRoute2);
 app.use('/users', userRoutes);
-app.use('/itinerary', itineraryRoute3)
+app.use('/itinerary', itineraryRoutes1);
+
 
 // Start the server
 app.listen(port, () => {
