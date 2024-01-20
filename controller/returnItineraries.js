@@ -30,10 +30,30 @@ const getItineraries = (req, res) => {
           res.status(500).json({ error: error.message });
           return;
         }
-        res.json(results);
+    
+        // nest destinations within each itinerary
+        const itineraries = {};
+        results.forEach(row => {
+          if (!itineraries[row.itinerary_id]) {
+            itineraries[row.itinerary_id] = {
+              itinerary_id: row.itinerary_id,
+              title: row.itinerary_title,
+              budget: row.itinerary_budget,
+              destinations: []
+            };
+          }
+          itineraries[row.itinerary_id].destinations.push({
+            id: row.destination_id,
+            name: row.destination_name,
+            cost: row.destination_cost,
+            notes: row.destination_notes
+          });
+        });
+    
+        res.json(Object.values(itineraries));
       });
-  }
-  
+    };
+ 
 module.exports = {
     getItineraries
 }
