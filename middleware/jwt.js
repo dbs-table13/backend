@@ -10,25 +10,35 @@ const createToken = (user) => {
 };
 
 const validateToken = (req, res, next) => {
-    const accessToken = req.cookies["access-token"];
-
-    if (!accessToken) {
-        return res.status(400).json({ error: "User not Authenticated!" });
-    }
-
     try {
+        const authorizationHeader = req.headers['authorization'];
+
+        if (!authorizationHeader || !authorizationHeader.startsWith('Bearer ')) {
+            return res.status(401).json({ error: 'Unauthorized: Access Token is missing or invalid' });
+        }
+
+        const accessToken = authorizationHeader.split(' ')[1];
+
+        if (!accessToken) {
+            return res.status(401).json({ error: 'Unauthorized: Access Token is missing or invalid' });
+        }
+
         const validToken = verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
+
         if (validToken) {
             // Extract user information from the token payload
             req.user = {
-                employee_id: validToken.id, // Map 'id' from the token payload to 'employee_id'
-                username: validToken.username // Assuming 'user_type' is not used, or you can map it accordingly
+                employee_id: validToken.id,
+                username: validToken.username
             };
             return next();
         }
     } catch (err) {
-        return res.status(400).json({ error: err.message });
+        return res.status(401).json({ error: 'Unauthorized: Invalid Access Token' });
     }
+
+    return res.status(401).json({ error: 'Unauthorized: Access Token is missing or invalid' });
 };
+
 
 module.exports = { createToken, validateToken };
