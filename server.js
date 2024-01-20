@@ -4,6 +4,7 @@ const result = dotenv.config();
 const express = require('express');
 const claimRoutes = require('./routes/claimsRouter.js');
 const destinationRoutes = require('./routes/destinationsRouter.js');
+const itineraryRoutes = require('./routes/itineraryRouter.js');
 
 const app = express();
 const port = 3001;
@@ -34,6 +35,9 @@ app.use('/claims', claimRoutes);
 
 // Destinations Routes
 app.use('/destination', destinationRoutes);
+
+//Itinerary Routes
+app.use('/itinerary', itineraryRoutes);
 
 // Start the server
 app.listen(port, () => {

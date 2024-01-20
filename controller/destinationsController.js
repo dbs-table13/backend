@@ -4,15 +4,17 @@ const connection = connectToDatabase();
 
 //editDestination endpoint
 const editDestination = (req, res) => {
-    const { id, country_id, cost, name, notes } = req.body;
+    const id = req.params.id
+
+    const { cost, name, notes } = req.body;
 
     const updateQuery = `
         UPDATE destination 
-        SET country_id = ?, cost = ?, name = ?, notes = ?
+        SET cost = ?, name = ?, notes = ?
         WHERE id = ?
     `;
 
-    connection.query(updateQuery, [country_id, cost, name, notes, id], (error, results) => {
+    connection.query(updateQuery, [cost, name, notes, id], (error, results) => {
         if (error) {
             res.status(500).json({ error: error.message});
             return;
@@ -21,24 +23,6 @@ const editDestination = (req, res) => {
     });
 }
 
-//deleteDestination endpoint
-// const deleteDestination = (req, res) => {
-//     const itineraryId = req.params.itineraryId;
-//     const destinationId = req.params.destinationId;
-//     const deleteQuery = `
-//         DELETE FROM itinerary_destination 
-//         WHERE itinerary_id = ? 
-//         AND destination_id = ?
-//     `;
-    
-//     connection.query(deleteQuery, [itineraryId, destinationId], (error, results) => {
-//         if (error) {
-//             res.status(500).json({ error: error.message });
-//             return
-//         }
-//         res.status(200).json({ message: 'Destination deleted successfully'})
-//     });
-// }
 const deleteDestination = (req, res) => {
     const id = req.params.id;
     const deleteItineraryDestinationQuery = `
