@@ -1,3 +1,4 @@
+
 const { connectToDatabase } = require('../database.js');
 const connection = connectToDatabase().promise(); // Use .promise() to enable the promise wrapper
 
@@ -53,6 +54,24 @@ const getItineraries = (req, res) => {
       res.status(201).json({message: 'Itineraries retrieved successfully', itineraries: Object.values(itineraries)});
     });
   };
+const editItinerary = (req, res) => {
+    const id = req.params.id
+    const { budget, title } = req.body;
+
+    const updateItinerary = `
+        UPDATE itinerary 
+        SET budget = ?, title = ?
+        WHERE id = ?
+    `;
+
+    connection.query(updateItinerary, [budget, title, id], (error) => {
+        if (error) {
+            res.status(500).json({ error: error.message});
+            return;
+        }
+        res.status(200).json({ message: 'Destination updated successfully'})
+    });
+}
 
 // deleteItinerary endpoint
 const deleteItinerary = async (req, res) => {
@@ -80,5 +99,6 @@ const deleteItinerary = async (req, res) => {
 
 module.exports = {
   getItineraries,
-  deleteItinerary
+  deleteItinerary,
+  editItinerary
 };

@@ -6,6 +6,8 @@ const express = require('express');
 const userRoutes = require('./routes/userRouter.js');
 const itineraryRoutes1 = require('./routes/itineraryRouter1.js');
 const itineraryRoute2 = require('./routes/itineraryRouter2.js');
+const destinationRoutes = require('./routes/destinationsRouter.js');
+const itineraryRoutes = require('./routes/itineraryRouter.js');
 
 const app = express();
 const port = 3001;
@@ -36,6 +38,12 @@ app.use('/itinerary', itineraryRoute2);
 app.use('/users', userRoutes);
 app.use('/itinerary', itineraryRoutes1);
 
+
+// Destinations Routes
+app.use('/destination', destinationRoutes);
+
+//Itinerary Routes
+app.use('/itinerary', itineraryRoutes);
 
 // Start the server
 app.listen(port, () => {
