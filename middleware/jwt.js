@@ -22,7 +22,7 @@ const validateToken = (req, res, next) => {
             // Extract user information from the token payload
             req.user = {
                 employee_id: validToken.id, // Map 'id' from the token payload to 'employee_id'
-                user_type: validToken.user_type // Assuming 'user_type' is not used, or you can map it accordingly
+                username: validToken.username // Assuming 'user_type' is not used, or you can map it accordingly
             };
             return next();
         }
