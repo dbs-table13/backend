@@ -3,6 +3,7 @@ const result = dotenv.config();
 
 const express = require('express');
 const itineraryRoutes = require('./routes/itineraryRouter1.js');
+const userRoutes = require('./routes/userRoutes.js');
 
 const app = express();
 const port = 3001;
@@ -29,6 +30,7 @@ connection.connect(error => {
   });
 
 // Claims Routes
+app.use('/users', userRoutes);
 app.use('/itinerary', itineraryRoutes);
 
 // Start the server
