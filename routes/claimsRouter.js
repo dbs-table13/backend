@@ -1,7 +1,7 @@
 // claimsRoutes.js
 const express = require('express');
 const router = express.Router();
-const claimsController = require('./claimsController');
+const claimsController = require('../controller/claimsController');
 
 router.get('/', claimsController.getAllClaims);
 router.get('/:id', claimsController.getClaimById);
