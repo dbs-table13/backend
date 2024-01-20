@@ -1,11 +1,24 @@
+
 const { connectToDatabase } = require('../database.js');
+
+/**
+ * Author: Deeksha Sridhar
+ * Last Modified: 20th Jan 2024
+ */
+
 const { createToken } = require('../middleware/JWT');
 
 const connection = connectToDatabase();
 
-// userLogin endpoint
+/**
+ * Handles user login functionality.
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ * @returns {json} - Returns a JSON response indicating success or failure.
+ */
 const userLogin = (req, res) => {
   try {
+    // Extract username and password from the request body
     const { username, password } = req.body;
 
     // Check if username and password are provided
@@ -37,7 +50,7 @@ const userLogin = (req, res) => {
       // Generate and return access token
       const accessToken = createToken(authenticatedUser);
       res.cookie("access-token", accessToken, {
-        maxAge: 60 * 60 * 24 * 30 * 1000
+        maxAge: 60 * 60 * 24 * 30 * 1000  // Set cookie expiration time to 30 days
       });
 
       res.status(200).json({ message: 'Logged In', access_token: accessToken });
@@ -48,9 +61,15 @@ const userLogin = (req, res) => {
   }
 }
 
-// logoutUser endpoint
+/**
+ * Handles user logout functionality.
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ * @returns {json} - Returns a JSON response indicating success or failure.
+ */
 const logoutUser = (req, res) => {
   try {
+    // Clear the access-token cookie
     res.clearCookie("access-token");
     res.status(200).json({ message: 'Logged Out' });
   } catch (error) {
